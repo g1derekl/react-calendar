@@ -9,7 +9,7 @@
       date: new Date(date.getFullYear(), date.getMonth(), date.getDay() + i),
       title: 'Event ' + i,
       onClick: function(event, element) {
-        console.log(event.title);
+        alert('Clicked ' + event.title);
       }
     });
   }

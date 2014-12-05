@@ -196,7 +196,7 @@
   });
 
   // Individual day component
-  CalendarDay = React.createClass({
+  var CalendarDay = React.createClass({
     handleClick: function(event) { // Perform function or navigate to link, depending on value provided.
       return function(clickEvent) {
         if (typeof(event.onClick) === 'function') {
