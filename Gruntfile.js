@@ -23,13 +23,13 @@ module.exports = function(grunt) {
     react: {
       single_file_output: {
         files: {
-          'compiled/react-calendar.js': 'calendar.js'
+          'compiled/react-calendar.js': 'react/calendar.js'
         }
       }
     },
     watch: {
       react: {
-        files: 'calendar.js',
+        files: 'react/calendar.js',
         tasks: ['react', 'uglify']
       }
     }
