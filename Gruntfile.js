@@ -11,6 +11,18 @@ module.exports = function(grunt) {
       '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
       ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
     // Task configuration.
+
+    less: {
+      compile: {
+        options: {
+          cleancss: true
+        },
+        files: {
+          'stylesheets/main.min.css': 'less/main.less'
+        }
+      }
+    },
+
     uglify: {
       options: {
         banner: '<%= banner %>'
@@ -31,6 +43,11 @@ module.exports = function(grunt) {
       react: {
         files: 'react/calendar.js',
         tasks: ['react', 'uglify']
+      },
+
+      less: {
+        file: 'less/**/*',
+        tasks: ['less']
       }
     }
   });
