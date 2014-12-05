@@ -101,13 +101,15 @@
     },
 
     render: function() {
-      var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
       return (
-        <div>
-          <div>{months[this.state.month] + ' ' + this.state.year}</div>
-
-          <CalendarControls previousMonth={this.previousMonth} nextMonth={this.nextMonth} resetMonth={this.resetMonth} />
+        <div id='react-cal-component'>
+          <CalendarControls
+            previousMonth={this.previousMonth}
+            nextMonth={this.nextMonth}
+            resetMonth={this.resetMonth}
+            month={this.state.month}
+            year={this.state.year}
+          />
 
           <CalendarBody
             month={this.state.month}
@@ -125,11 +127,14 @@
   // Calendar control buttons component
   var CalendarControls = React.createClass({
     render: function() {
+      var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
       return (
-        <span>
-          <button onClick={this.props.previousMonth}>Previous month</button>
-          <button onClick={this.props.nextMonth}>Next month</button>
-          <button onClick={this.props.resetMonth}>Today</button>
+        <span className='react-cal-controls'>
+          <h4 className='react-cal-month-label'>{months[this.props.month] + ' ' + this.props.year}</h4>
+          <button className='react-cal-prev-month' onClick={this.props.previousMonth}>{'<'}</button>
+          <button className='react-cal-next-month' onClick={this.props.nextMonth}>{'>'}</button>
+          <button className='react-cal-today-button' onClick={this.props.resetMonth}>Today</button>
         </span>
       )
     }
@@ -142,7 +147,11 @@
       var daysHeading = [];
 
       for (var i=0; i < daysOfWeek.length; i++) {
-        daysHeading.push(daysOfWeek[i]);
+        daysHeading.push(
+          <div className='react-cal-weekday'>
+            <h5>{daysOfWeek[i]}</h5>
+          </div>
+        );
       }
 
       return daysHeading;
@@ -197,11 +206,11 @@
 
     render: function() {
       return (
-        <div>
-          <div>
+        <div id='react-cal-grid'>
+          <div className='react-cal-weekdays react-cal-grid-1-7'>
             {this.generateHeading()}
           </div>
-          <div>
+          <div className='react-cal-days react-cal-grid-1-7'>
             {this.generateDays()}
           </div>
         </div>
@@ -228,15 +237,18 @@
       for (var i=0; i < this.props.events.length; i++) {
         events.push(
           <li onClick={this.handleClick(this.props.events[i])}>
-            {this.props.events[i].title}
+            <label>{this.props.events[i].title}</label>
           </li>
         )
       }
 
+
       return (
-        <div>
-          <span>{this.props.day}</span>
-          <ul>{events}</ul>
+        <div className='react-cal-day'>
+          <div>
+            <h5 className='react-cal-day-label'>{this.props.day}</h5>
+            <ul className='react-cal-events-list'>{events}</ul>
+          </div>
         </div>
       )
     }

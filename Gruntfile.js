@@ -46,7 +46,7 @@ module.exports = function(grunt) {
       },
 
       less: {
-        file: 'less/**/*',
+        files: 'less/**/*',
         tasks: ['less']
       }
     }

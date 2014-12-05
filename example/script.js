@@ -8,10 +8,7 @@
     for (var j=0; j < 10; j++) {
       events.push({
         date: new Date(date.getFullYear(), date.getMonth(), date.getDay() + i),
-        title: 'Event ' + i + '-' + j,
-        onClick: function(event, element) {
-          alert('Clicked ' + event.title);
-        }
+        title: 'Event ' + i + '-' + j
       });
     }
   }
