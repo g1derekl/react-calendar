@@ -143,13 +143,19 @@
   var CalendarBody = React.createClass({
     generateHeading: function() {
       var daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      var daysOfWeekAbbriviated = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
       var daysHeading = [];
+
+      var windowWidth = window.innerWidth;
+      if(windowWidth<600){
+        daysOfWeek = daysOfWeekAbbriviated;   
+      }
 
       for (var i=0; i < daysOfWeek.length; i++) {
         daysHeading.push(
           <div className='react-cal-weekday'>
-            <h5>{daysOfWeek[i]}</h5>
+             <h5>{daysOfWeek[i]}</h5>
           </div>
         );
       }
