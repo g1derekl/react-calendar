@@ -1,0 +1,1 @@
+React.render(React.createElement(ReactCalendar, null), document.body);
