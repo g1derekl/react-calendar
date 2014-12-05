@@ -12,10 +12,19 @@
       }
     },
 
+    // E.g. when user wants to filter events or dynamically add new ones.
     componentWillReceiveProps: function(nextProps) {
 
       this.setState({
         events: this.organizeEvents(nextProps.events)
+      });
+    },
+
+    // Reset calendar view to current month.
+    resetMonth: function() {
+      this.setState({
+        year: new Date().getFullYear(),
+        month: new Date().getMonth()
       });
     },
 
@@ -94,19 +103,11 @@
     render: function() {
       var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-      // var events = {};
-      // if (this.state.events[this.state.year] && this.state.events[this.state.year][this.state.month]) {
-      //   events = this.state.events[this.state.year][this.state.month];
-      // }
-
       return (
         <div>
           <div>{months[this.state.month] + ' ' + this.state.year}</div>
 
-          <span>
-            <button onClick={this.previousMonth}>Previous month</button>
-            <button onClick={this.nextMonth}>Next month</button>
-          </span>
+          <CalendarControls previousMonth={this.previousMonth} nextMonth={this.nextMonth} resetMonth={this.resetMonth} />
 
           <CalendarBody
             month={this.state.month}
@@ -117,6 +118,19 @@
             events={this.state.events}
           />
         </div>
+      )
+    }
+  });
+
+  // Calendar control buttons component
+  var CalendarControls = React.createClass({
+    render: function() {
+      return (
+        <span>
+          <button onClick={this.props.previousMonth}>Previous month</button>
+          <button onClick={this.props.nextMonth}>Next month</button>
+          <button onClick={this.props.resetMonth}>Today</button>
+        </span>
       )
     }
   });
