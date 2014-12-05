@@ -158,7 +158,7 @@
     },
 
     // Generate day component for each day in view.
-    formatDay: function(year, month, day) {
+    formatDay: function(year, month, day, currentMonth) {
 
       var month = new Date(year, month, day);
 
@@ -169,7 +169,7 @@
         events = this.props.events[month.getFullYear()][month.getMonth()][day];
       }
 
-      return <CalendarDay year={month.getFullYear()} month={month.getMonth()} day={day} events={events} />
+      return <CalendarDay year={month.getFullYear()} month={month.getMonth()} day={day} events={events} currentMonth={currentMonth} />
     },
 
     // Fill out days of previous month until we get to first day of current month.
@@ -193,7 +193,7 @@
         totalDays++;
       }
       for (var i=1; i <= this.props.numberOfDays; i++) {
-        days.push(this.formatDay(this.props.year, this.props.month, i));
+        days.push(this.formatDay(this.props.year, this.props.month, i, true));
 
         totalDays++;
       }
@@ -242,11 +242,15 @@
         )
       }
 
+      var currentMonthClass;
+      if (this.props.currentMonth) {
+        currentMonthClass='react-cal-current-month-day';
+      }
 
       return (
         <div className='react-cal-day'>
           <div>
-            <h5 className='react-cal-day-label'>{this.props.day}</h5>
+            <h5 className={'react-cal-day-label ' + currentMonthClass}>{this.props.day}</h5>
             <ul className='react-cal-events-list'>{events}</ul>
           </div>
         </div>
