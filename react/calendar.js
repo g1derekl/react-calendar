@@ -143,13 +143,19 @@
   var CalendarBody = React.createClass({
     generateHeading: function() {
       var daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      var daysOfWeekAbbriviated = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
       var daysHeading = [];
+
+      var windowWidth = window.innerWidth;
+      if(windowWidth<600){
+        daysOfWeek = daysOfWeekAbbriviated;   
+      }
 
       for (var i=0; i < daysOfWeek.length; i++) {
         daysHeading.push(
           <div className='react-cal-weekday'>
-            <h5>{daysOfWeek[i]}</h5>
+             <h5>{daysOfWeek[i]}</h5>
           </div>
         );
       }
@@ -288,7 +294,7 @@
       var viewAll = '';
       if (this.props.events.length > 3) { // If there are more than 3 events in a day, display the first 3 and add a "show all" button.
         viewAll = (
-          <label onClick={this.viewAll} className='react-cal-view-all-events'>{'View All (' + this.props.events.length + ' total)'}</label>
+          <label onClick={this.viewAll} className='react-cal-view-all-events'>{'...'}</label>
         )
       }
 
