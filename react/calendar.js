@@ -220,7 +220,12 @@
 
   // Individual day component
   var CalendarDay = React.createClass({
-    handleClick: function(event) { // Perform function or navigate to link, depending on value provided.
+    getInitialState: function() {
+      return {
+        viewAll: false
+      }
+    },
+    clickEvent: function(event) { // Perform function or navigate to link, depending on value provided.
       return function(clickEvent) {
         if (typeof(event.onClick) === 'function') {
           event.onClick(event, clickEvent.target);
@@ -230,15 +235,60 @@
         }
       }
     },
+    closeViewAllBox: function(e) {
+
+      if (e.target.classList && e.target.classList[0] === 'react-cal-view-all-box') {
+        this.setState({
+          viewAll: false
+        });
+      }
+    },
+    viewAll: function() {
+      this.setState({
+        viewAll: true
+      });
+    },
     render: function() {
 
       var events = [];
 
-      for (var i=0; i < this.props.events.length; i++) {
+      for (var i=0; i < this.props.events.length && i < 3; i++) {
         events.push(
-          <li onClick={this.handleClick(this.props.events[i])}>
+          <li onClick={this.clickEvent(this.props.events[i])}>
             <label>{this.props.events[i].title}</label>
           </li>
+        )
+      }
+
+      var viewAllBox;
+
+      if (this.state.viewAll) {
+
+        var allEvents = [];
+
+        for (var i=0; i < this.props.events.length; i++) {
+          allEvents.push(
+            <li onClick={this.clickEvent(this.props.events[i])}>
+              <label>{this.props.events[i].title}</label>
+            </li>
+          )
+        }
+
+        viewAllBox = (
+          <div onClick={this.closeViewAllBox} className='react-cal-view-all-box'>
+            <div className='react-cal-all-events'>
+              <ul>
+                {allEvents}
+              </ul>
+            </div>
+          </div>
+        )
+      }
+
+      var viewAll = '';
+      if (this.props.events.length > 3) { // If there are more than 3 events in a day, display the first 3 and add a "show all" button.
+        viewAll = (
+          <label onClick={this.viewAll} className='react-cal-view-all-events'>{'View All (' + this.props.events.length + ' total)'}</label>
         )
       }
 
@@ -252,7 +302,9 @@
           <div>
             <h5 className={'react-cal-day-label ' + currentMonthClass}>{this.props.day}</h5>
             <ul className='react-cal-events-list'>{events}</ul>
+            {viewAll}
           </div>
+          {viewAllBox}
         </div>
       )
     }
